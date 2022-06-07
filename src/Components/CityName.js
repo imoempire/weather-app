@@ -13,14 +13,16 @@ const CityName = ({ name, country }) => {
       }, 1000);
    }, []);
 
+  //  console.log(time)
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <Entypo name="location-pin" size={30} color="black" />
         <Text style={styles.name}>{name}</Text>
       </View>
-      <Text style={{fontSize: 20}}>{time}</Text>
-      <Text style={{fontSize: 20}}>{country}</Text>
+      <Text style={{fontSize: 20, color: 'black'}}>{time}</Text>
+      <Text style={{fontSize: 20, color: 'black'}}>{country}</Text>
     </View>
   );
 };
@@ -29,10 +31,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: 'space-between',
+    marginHorizontal: 20
   },
   name: {
     fontSize: 20,
     flexDirection: "row",
+    color: 'black'
   },
 });
 

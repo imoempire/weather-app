@@ -10,17 +10,17 @@ const Bottom = ({ weather }) => {
     <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.Text}>Temperature</Text>
-        <FontAwesome5 name="temperature-low" size={30} color="red" />
+        <FontAwesome5 name="temperature-low" size={30} color="black" />
         <Text style={styles.Text}>{C.toFixed(2)} &#8451;</Text>
       </View>
       <View style={styles.box}>
         <Text style={styles.Text}> Humidity</Text>
-        <MaterialCommunityIcons name="water-percent" size={30} color="blue" />
+        <MaterialCommunityIcons name="water-percent" size={30} color="black" />
         <Text style={styles.Text}> {weather.humidity} %</Text>
       </View>
       <View style={styles.box}>
         <Text style={styles.Text}>Pressure</Text>
-        <SimpleLineIcons name="speedometer" size={30} color="#c2d0e1" />
+        <SimpleLineIcons name="speedometer" size={30} color="black" />
         <Text style={styles.Text}>{weather.press} mb</Text>
       </View>
     </View>
