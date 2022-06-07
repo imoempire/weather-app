@@ -5,13 +5,13 @@ import axios from "axios";
 import CityName from "../Components/CityName";
 import Bottom from "../Components/Bottom";
 import Description from "../Components/Description";
+import image1 from "../../assets/clouds.png";
 
 const Home = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [weather, setWeather] = useState("");
   const [city, setCity] = useState("");
-  const [icons, setIcons] = useState("");
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -26,7 +26,7 @@ const Home = () => {
 
   useEffect(() => {
     getLocation();
-  }, []);
+  }, [location]);
 
   let text = "Waiting..";
   if (errorMsg) {
@@ -52,7 +52,7 @@ const Home = () => {
         humidity: res.data.main.humidity,
         press: res.data.main.pressure,
         country: res.data.sys.country,
-        icons: res.data.weather[0].icon
+        icons: res.data.weather[0].icon,
       });
       // console.log(res.data);
       setCity(res.data.name);
@@ -69,15 +69,54 @@ const Home = () => {
   let k = weather.temp;
   let C = k - 273.15;
 
+  const imgUrl =
+    "https://ih1.redbubble.net/image.1625262777.5760/farp,small,wall_texture,product,750x1000.jpg";
+
+  const [time, setTime] = useState("");
+  const [hour, setHour] = useState("");
+  const [min, setMin] = useState("");
+  const [seconds, setSeconds] = useState("");
+
+  useEffect(() => {
+    setInterval(() => {
+      const today = new Date();
+      setHour(today.getHours());
+      setMin(today.getMinutes());
+      setSeconds(today.getSeconds());
+      const date = hour + ":" + min + ":" + seconds;
+      setTime(date);
+    }, 1000);
+  }, []);
+
+  const getBgImg = (hour) => {
+    if (hour <= 12) {
+      return require(`../../assets/morn.png`);
+    } else if (hour <= 12) {
+      return require(`../../assets/clouds.png`);
+    } else if (hour <= 16) {
+      return require(`../../assets/evensun.png`);
+    } else {
+      return require(`../../assets/night.jpg`);
+    }
+  };
+
   return (
-    <ImageBackground blurRadius={5} source={{url: 'https://i.pinimg.com/originals/ac/ae/b8/acaeb8dee54987880768262623db3d58.jpg'}} style={styles.container}>
+    <ImageBackground
+      blurRadius={5}
+      source={getBgImg(hour)}
+      style={styles.container}
+    >
       <Text>{text}</Text>
       <View style={styles.CityName}>
         <CityName name={city} country={weather.country} />
       </View>
 
       <View style={styles.Description}>
-        <Description temp={weather.temp} descp={weather.descp} weatherIcon={weather.icons} />
+        <Description
+          temp={weather.temp}
+          descp={weather.descp}
+          weatherIcon={weather.icons}
+        />
       </View>
       <View style={styles.Bottom}>
         <Bottom weather={weather} />
@@ -94,19 +133,20 @@ const styles = StyleSheet.create({
     flex: 0.2,
     justifyContent: "center",
     marginHorizontal: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
   },
   Description: {
     flex: 1,
     marginHorizontal: 10,
+    marginTop: 50,
   },
   Bottom: {
     flex: 0.4,
-    
+
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: "white",
-   //  borderBottomLeftRadius: 10,
-   //  borderBottomRightRadius: 10,
     justifyContent: "center",
   },
 });
